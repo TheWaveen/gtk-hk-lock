@@ -1,36 +1,18 @@
 import React from 'react';
 
-export default function Button({ children, onClick, disabled, style, loading, globalLoading, ...props }) {
+export default function Button({ children, onClick, disabled, loading, globalLoading, className = '', ...props }) {
   const isDisabled = (globalLoading && !loading) || disabled;
+  const btnClasses = `btn ${loading ? 'btn--loading' : ''} ${className}`.trim();
+  
   return (
     <button
       onClick={onClick}
       disabled={isDisabled}
-      style={{
-        padding: '10px 20px',
-        background: '#007bff',
-        color: 'white',
-        border: 'none',
-        borderRadius: 5,
-        cursor: isDisabled ? 'not-allowed' : 'pointer',
-        fontSize: 16,
-        position: 'relative',
-        ...style,
-      }}
+      className={btnClasses}
       {...props}
     >
       {loading && (
-        <span style={{
-          display: 'inline-block',
-          width: 16,
-          height: 16,
-          border: '2px solid #fff',
-          borderTop: '2px solid #007bff',
-          borderRadius: '50%',
-          animation: 'spin 1s linear infinite',
-          verticalAlign: 'middle',
-          marginRight: 8,
-        }} />
+        <span className="loading-spinner" />
       )}
       {children}
     </button>

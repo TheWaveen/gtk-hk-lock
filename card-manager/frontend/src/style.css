@@ -2,14 +2,20 @@ html {
     background-color: rgba(27, 38, 54, 1);
     text-align: center;
     color: white;
+    background: linear-gradient(135deg, #7AC2B4 0%, #5A9A8E 100%);
+    background-attachment: fixed;
 }
 
 body {
     margin: 0;
+    padding: 0;
     color: white;
     font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
     "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
+    background: linear-gradient(135deg, #7AC2B4 0%, #5A9A8E 100%);
+    background-attachment: fixed;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 @font-face {
@@ -22,4 +28,31 @@ body {
 
 #app {
     text-align: center;
+}
+
+/* Global button styles */
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+button {
+    transition: all 0.2s ease;
+}
+
+button:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Form element focus styles */
+input:focus, select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+}
+
+/* Logo styling */
+.logo {
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
 }

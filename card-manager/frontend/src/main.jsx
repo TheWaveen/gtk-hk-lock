@@ -5,54 +5,9 @@ import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import CardsTable from './components/CardsTable.jsx';
 import LogsTable from './components/LogsTable.jsx';
-import Button from './components/Button.jsx';
-import LastCard from './components/LastCard.jsx';
-import ConnectionSelector from './components/ConnectionSelector.jsx';
-import { ListPorts, Connect, SendCommand, Disconnect, ListenForNewCard, GetLastScannedCard, IsConnected, GetConnectionStatus } from '../wailsjs/go/main/App';
+import { SendCommand, IsConnected, GetConnectionStatus } from '../wailsjs/go/main/App';
 import { EventsOn } from '../wailsjs/runtime/runtime';
 import logo from './assets/images/logo.png';
-
-// Add CSS for better styling
-const style = document.createElement('style');
-style.textContent = `
-  body {
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, #7AC2B4 0%, #5A9A8E 100%);
-    background-attachment: fixed;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  }
-  
-  html {
-    background: linear-gradient(135deg, #7AC2B4 0%, #5A9A8E 100%);
-    background-attachment: fixed;
-  }
-  
-  button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-  
-  button {
-    transition: all 0.2s ease;
-  }
-  
-  button:hover:not(:disabled) {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  }
-  
-  input:focus, select:focus {
-    outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
-  }
-  
-  .logo {
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-  }
-`;
-document.head.appendChild(style);
 
 // Helper to get/set aliases in localStorage
 function getAliases() {
@@ -572,49 +527,21 @@ function App() {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 10, fontFamily: 'Arial, sans-serif', justifyContent: 'flex-start', overflow: 'hidden' }}>
-      <img src={logo} alt="Kártya Kezelő" style={{ width: '100px', height: '100px', marginTop: 20 }} />
-      <h1 style={{ color: 'white', marginBottom: 20, marginTop: 10 }}>Kártya Kezelő</h1>
+    <div className="app-container">
+      <img src={logo} alt="Kártya Kezelő" className="app-logo" />
+      <h1 className="app-title">Kártya Kezelő</h1>
       
       {/* Connection Status - Centered below title */}
-      <div style={{ 
-        marginBottom: 20,
-        textAlign: 'center'
-      }}>
-        <div style={{ 
-          display: 'inline-flex', 
-          alignItems: 'center', 
-          padding: '10px 20px', 
-          borderRadius: '25px',
-          backgroundColor: connectionStatus === 'connected' ? '#4CAF50' : '#FF9800',
-          color: 'white',
-          fontWeight: 'bold',
-          fontSize: '16px',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
-          border: '2px solid white'
-        }}>
-          <div style={{ 
-            width: '12px', 
-            height: '12px', 
-            borderRadius: '50%', 
-            backgroundColor: connectionStatus === 'connected' ? '#fff' : '#fff',
-            marginRight: '10px',
-            animation: connectionStatus === 'searching' ? 'pulse 2s infinite' : 'none'
-          }}></div>
+      <div className="connection-status">
+        <div className={`connection-status__indicator ${connectionStatus === 'connected' ? 'connection-status__indicator--connected' : 'connection-status__indicator--searching'}`}>
+          <div className={`connection-status__dot ${connectionStatus === 'searching' ? 'connection-status__dot--searching' : ''}`}></div>
           {connectionStatus === 'connected' ? 'Kapcsolódva' : 'Eszköz keresése...'}
         </div>
         
-                {/* Memory Usage Indicator */}
+        {/* Memory Usage Indicator */}
         {connectionStatus === 'connected' && (
           <div 
-            style={{ 
-              marginTop: 8,
-              color: 'white',
-              fontSize: '14px',
-              opacity: 0.9,
-              cursor: 'pointer',
-              userSelect: 'none'
-            }}
+            className="memory-usage"
             onClick={(e) => {
               if (e.shiftKey) {
                 e.preventDefault();
@@ -633,8 +560,8 @@ function App() {
       </div>
       
       {/* Tab content area */}
-      <div className={`content-card${connected ? '' : ' content-card--disabled'}`} style={{ display: 'flex', flexDirection: 'column', width: '100%', maxWidth: '800px', maxHeight: '850px', padding: '15px', marginBottom: '0' }}>
-        <div className="tabs-bar" style={{ marginBottom: '10px' }}>
+      <div className={`content-card tab-content${connected ? '' : ' content-card--disabled'}`}>
+        <div className="tabs-bar tabs-bar--main">
           <button
             onClick={() => connected && setActiveTab('cards')}
             disabled={!connected}
@@ -664,8 +591,8 @@ function App() {
         )}
         {activeTab === 'logs' && (
           <>
-            {logsError && <div style={{ color: 'red', marginBottom: 10 }}>{logsError}</div>}
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, maxHeight: '550px' }}>
+            {logsError && <div className="error-message">{logsError}</div>}
+            <div className="logs-content">
               <LogsTable
                 logs={logs}
                 loading={logsLoading}
@@ -684,19 +611,3 @@ function App() {
 
 const root = createRoot(document.getElementById('app'));
 root.render(<App />);
-
-// Add spinner animation CSS
-const aliasSpinnerStyle = document.createElement('style');
-aliasSpinnerStyle.textContent = `
-  @keyframes spin { 
-    0% { transform: rotate(0deg); } 
-    100% { transform: rotate(360deg); } 
-  }
-  
-  @keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.5; }
-    100% { opacity: 1; }
-  }
-`;
-document.head.appendChild(aliasSpinnerStyle);
