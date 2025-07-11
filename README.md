@@ -48,21 +48,64 @@ Arduino Uno-based RFID lock controller featuring:
    cd card-manager
    ```
 
-2. Install dependencies:
+2. Install backend dependencies:
    ```bash
    npm install
    ```
 
-3. For live development:
+3. Install frontend dependencies:
+   ```bash
+   cd frontend
+   npm install
+   cd ..
+   ```
+
+4. For live development:
    ```bash
    wails dev
    ```
    This runs a Vite development server with hot reload. You can also access the dev server at http://localhost:34115 for browser-based development.
 
-4. To build for production:
+5. To build for production:
+
+   **For all platforms:**
    ```bash
    wails build
    ```
+
+   **Platform-specific builds:**
+
+   **macOS (Intel):**
+   ```bash
+   wails build -platform darwin/amd64
+   ```
+
+   **macOS (Apple Silicon):**
+   ```bash
+   wails build -platform darwin/universal
+   ```
+
+   **Windows 64-bit:**
+   ```bash
+   wails build -platform windows/amd64
+   ```
+
+   **Cross-platform builds (from any OS):**
+   ```bash
+   # Build for all platforms
+   wails build -platform darwin/universal,windows/amd64
+   
+   # Or build individually
+   wails build -platform darwin/amd64
+   wails build -platform darwin/universal  
+   wails build -platform windows/amd64
+   ```
+
+   **Build options:**
+   - `-clean`: Clean build cache before building
+   - `-debug`: Include debug information
+   - `-skipbindings`: Skip binding generation
+   - `-webview2 embed`: Embed WebView2 runtime (Windows only)
 
 ### Arduino Setup
 

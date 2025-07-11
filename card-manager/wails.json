@@ -6,6 +6,7 @@
   "frontend:build": "npm run build",
   "frontend:dev:watcher": "npm run dev",
   "frontend:dev:serverUrl": "auto",
+  "icon": "frontend/src/assets/images/icon.png",
   "author": {
     "name": "Waveen",
     "email": "thomas@waveen.com"
