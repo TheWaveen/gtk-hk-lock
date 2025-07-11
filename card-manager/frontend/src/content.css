@@ -1,0 +1,72 @@
+/* Card container */
+.content-card {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 20px;
+  opacity: 1;
+  pointer-events: auto;
+}
+.content-card--disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Tabs bar */
+.tabs-bar {
+  display: flex;
+  border-bottom: 2px solid #eee;
+  margin-bottom: 20px;
+  width: 100%;
+}
+.tab-btn {
+  flex: 1;
+  padding: 12px;
+  background: white;
+  border: none;
+  border-bottom: 2px solid #eee;
+  color: #333;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+}
+.tab-btn:disabled {
+  color: #aaa;
+  cursor: not-allowed;
+}
+.tab-btn--active {
+  background: #f8f9fa;
+  border-bottom: 2px solid #007bff;
+  color: #007bff;
+}
+
+/* Logs table */
+.logs-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  color: #111;
+}
+.logs-table-header {
+  background: #f8f9fa;
+}
+.logs-table-row {
+  border-bottom: 1px solid #dee2e6;
+}
+.logs-table-cell {
+  padding: 12px;
+  color: #111;
+  text-align: left;
+  border-bottom: 2px solid #dee2e6;
+}
+.logs-table-cell--granted {
+  color: #28a745;
+  font-weight: 600;
+}
+.logs-table-cell--denied {
+  color: #dc3545;
+  font-weight: 600;
+} 
